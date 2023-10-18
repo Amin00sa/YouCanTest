@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Products\ProductStoreRequest;
 use App\Http\Requests\Products\ProductUpdateRequest;
-use App\Http\Resources\ProductCollection;
-use App\Http\Resources\ProductResource;
+use App\Http\Resources\Products\ProductCollection;
+use App\Http\Resources\Products\ProductResource;
 use App\Http\Services\Products\ProductService;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -41,7 +41,7 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-        $this->productService->deleteCategory($product);
+        $this->productService->deleteProduct($product);
 
         return response()->noContent();
     }

@@ -31,7 +31,7 @@ class ProductRepository implements ProductRepositoryInterface {
         return $product->delete();
     }
 
-    public function getAllProducts(): Collection|array
+    public function getAllProducts(): Collection
     {
         return Product::with('category')->get();
     }

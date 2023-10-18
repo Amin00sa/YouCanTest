@@ -4,6 +4,7 @@ namespace App\Http\Repositories\Categories;
 
 use App\Http\Interfaces\Categories\CategoryRepositoryInterface;
 use App\Models\Category;
+use Illuminate\Database\Eloquent\Collection;
 
 class CategoryRepository implements CategoryRepositoryInterface {
 
@@ -13,17 +14,18 @@ class CategoryRepository implements CategoryRepositoryInterface {
         return Category::create($data);
     }
 
-    public function updateCategory(Category $product, array $data)
+    public function updateCategory(Category $category, array $data): Category
     {
-        // TODO: Implement updateProduct() method.
+        $category->update($data);
+        return $category;
     }
 
-    public function deleteCategory(Category $product)
+    public function deleteCategory(Category $category): ?bool
     {
-        // TODO: Implement deleteProduct() method.
+        return $category->delete();
     }
 
-    public function getAllCategories(): \Illuminate\Database\Eloquent\Collection
+    public function getAllCategories(): Collection
     {
         return Category::with('parent')->get();
     }

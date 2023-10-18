@@ -5,6 +5,7 @@ namespace App\Http\Services\Products;
 use App\Http\Interfaces\Products\ProductServiceInterface;
 use App\Http\Repositories\Products\ProductRepository;
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Collection;
 
 class ProductService implements ProductServiceInterface {
 
@@ -17,17 +18,17 @@ class ProductService implements ProductServiceInterface {
         return $this->productRepository->createProduct($data);
     }
     // Implement other methods
-    public function updateProduct(Product $product, array $data)
+    public function updateProduct(Product $product, array $data): Product
     {
-        // TODO: Implement updateProduct() method.
+        return $this->productRepository->updateProduct($product,$data);
     }
 
-    public function deleteProduct(Product $product)
+    public function deleteProduct(Product $product): ?bool
     {
-        // TODO: Implement deleteProduct() method.
+        return $this->productRepository->deleteProduct($product);
     }
 
-    public function getAllProducts()
+    public function getAllProducts():Collection
     {
         return $this->productRepository->getAllProducts();
     }

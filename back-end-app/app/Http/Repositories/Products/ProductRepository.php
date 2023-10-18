@@ -4,6 +4,7 @@ namespace App\Http\Repositories\Products;
 
 use App\Http\Interfaces\Products\ProductRepositoryInterface;
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Collection;
 
 class ProductRepository implements ProductRepositoryInterface {
 
@@ -19,17 +20,18 @@ class ProductRepository implements ProductRepositoryInterface {
         return Product::create($data);
     }
 
-    public function updateProduct(Product $product, array $data)
+    public function updateProduct(Product $product, array $data): Product
     {
-        // TODO: Implement updateProduct() method.
+         $product->update($data);
+        return $product;
     }
 
-    public function deleteProduct(Product $product)
+    public function deleteProduct(Product $product): ?bool
     {
-        // TODO: Implement deleteProduct() method.
+        return $product->delete();
     }
 
-    public function getAllProducts()
+    public function getAllProducts(): Collection|array
     {
         return Product::with('category')->get();
     }

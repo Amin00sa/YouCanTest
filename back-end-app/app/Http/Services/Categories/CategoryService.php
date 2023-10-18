@@ -5,6 +5,7 @@ namespace App\Http\Services\Categories;
 use App\Http\Interfaces\Categories\CategoryServiceInterface;
 use App\Http\Repositories\Categories\CategoryRepository;
 use App\Models\Category;
+use Illuminate\Database\Eloquent\Collection;
 
 class CategoryService implements CategoryServiceInterface {
 
@@ -18,17 +19,17 @@ class CategoryService implements CategoryServiceInterface {
         return $this->categoryRepository->createCategory($data);
     }
     // Implement other methods
-    public function updateCategory(Category $product, array $data)
+    public function updateCategory(Category $category, array $data): Category
     {
-        // TODO: Implement updateProduct() method.
+        return $this->categoryRepository->updateCategory($category,$data);
     }
 
-    public function deleteCategory(Category $product)
+    public function deleteCategory(Category $category): ?bool
     {
-        // TODO: Implement deleteProduct() method.
+        return $this->categoryRepository->deleteCategory($category);
     }
 
-    public function getAllCategories()
+    public function getAllCategories(): Collection
     {
         return $this->categoryRepository->getAllCategories();
     }

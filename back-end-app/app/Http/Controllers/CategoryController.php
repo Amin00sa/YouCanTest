@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CategoryStoreRequest;
-use App\Http\Requests\CategoryUpdateRequest;
-use App\Http\Resources\CategoryCollection;
-use App\Http\Resources\CategoryResource;
+use App\Http\Requests\Categories\CategoryStoreRequest;
+use App\Http\Requests\Categories\CategoryUpdateRequest;
+use App\Http\Resources\Categories\CategoryCollection;
+use App\Http\Resources\Categories\CategoryResource;
 use App\Http\Services\Categories\CategoryService;
 use App\Models\Category;
-use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {

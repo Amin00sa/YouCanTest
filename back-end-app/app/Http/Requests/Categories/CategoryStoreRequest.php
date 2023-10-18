@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Categories;
 
-class CategoryStoreRequest
+use Illuminate\Foundation\Http\FormRequest;
+
+class CategoryStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

@@ -5,6 +5,7 @@ namespace App\Http\Repositories\Products;
 use App\Http\Interfaces\Products\ProductRepositoryInterface;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Storage;
 
 class ProductRepository implements ProductRepositoryInterface {
 
@@ -22,7 +23,21 @@ class ProductRepository implements ProductRepositoryInterface {
 
     public function updateProduct(Product $product, array $data): Product
     {
-         $product->update($data);
+        if ($data['image'] != null) {
+            $hashedName = hash_file('sha256', $data['image']->path());
+            $extension = $data['image']->getClientOriginalExtension();
+            $filename = $hashedName . '.' . $extension;
+            $data['image']->storeAs('public/products/', $filename);
+            if ($product->image) {
+                $existingFilePath = $product->image;
+                if (Storage::disk('public')->exists($existingFilePath)) {
+                    Storage::disk('public')->delete($existingFilePath); // Delete the file from the server
+                }
+            }
+            $pathToFile = asset('storage/products/'.$filename);
+            $data['image'] = $pathToFile;
+        }
+        $product->update($data);
         return $product;
     }
 

@@ -26,6 +26,7 @@
         <input
             type="file"
             id="image"
+            @change="handleImageUpload"
             accept="image/*"
             class="form-control"
         />
@@ -54,6 +55,9 @@ export default {
     BaseButton,
     BaseInput
   },
+  created() {
+    this.fetchCategories();
+  },
   data() {
     return {
       formData: {
@@ -61,17 +65,23 @@ export default {
         description: '',
         price: '',
         category_id: '',
-        image: ''
+        image: null // Store the image file here
       },
       categories: []
     }
   },
-  created() {
-    this.fetchCategories();
-  },
+  // Rest of your component code...
   methods: {
     createProduct() {
-      ProductService.createProduct(this.formData)
+      // Create a FormData object and append the form data to it
+      const formData = new FormData();
+      formData.append('name', this.formData.name);
+      formData.append('description', this.formData.description);
+      formData.append('price', this.formData.price);
+      formData.append('category_id', this.formData.category_id);
+      formData.append('image', this.formData.image); // Append the image file to the FormData
+
+      ProductService.createProduct(formData)
           .then((response) => {
             // Product created successfully, handle the response
             console.log('Product created:', response.data)
@@ -81,6 +91,13 @@ export default {
             console.error('Error creating product:', error)
           })
     },
+    handleImageUpload(event) {
+      // Get the selected file from the input
+      const file = event.target.files[0];
+      console.log(file);
+      // Update the formData.image property with the selected file
+      this.formData.image = file;
+    },
     fetchCategories() {
       CategoryService.getCategories()
           .then(response => {
@@ -89,7 +106,7 @@ export default {
           .catch(error => {
             console.error('Error fetching categories:', error);
           });
-    }
+    },
   }
 }
 </script>

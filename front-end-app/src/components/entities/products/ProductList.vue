@@ -2,7 +2,23 @@
   <div>
     <ul>
       <li v-for="product in products.data" :key="product.id">
-        {{ product.name }} - {{ product.price }}
+        <ul>
+          <li>
+            Id : {{ product.id }}
+          </li>
+          <li>
+            Name : {{ product.name }}
+          </li>
+          <li>
+            Description : {{ product.description }}
+          </li>
+          <li>
+            Image : <img :src="product.image" style="width: 100px; height: 50px">
+          </li>
+          <li v-if="product.category != null">
+            Parent Name : {{product.category?.name}}
+          </li>
+        </ul>
       </li>
     </ul>
   </div>

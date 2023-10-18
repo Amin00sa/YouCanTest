@@ -1,6 +1,7 @@
 <template>
   <div class="d-xl-flex justify-content-center align-items-center vh-100">
     <div class="text-center">
+      <RouterLink to="/products/create">Add new Product</RouterLink>
       <h1>Product List</h1>
       <ProductList />
     </div>

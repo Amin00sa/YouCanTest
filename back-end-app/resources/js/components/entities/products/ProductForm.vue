@@ -49,6 +49,7 @@ import BaseButton from '../../common/BaseButton.vue'
 import BaseInput from '../../common/BaseInput.vue'
 import ProductService from '../../../services/ProductService.js'
 import CategoryService from "../../../services/CategoryService";
+import {reactive} from "vue";
 
 export default {
   components: {
@@ -60,13 +61,13 @@ export default {
   },
   data() {
     return {
-      formData: {
+      formData: reactive({
         name: '',
         description: '',
         price: '',
         category_id: '',
         image: null // Store the image file here
-      },
+      }),
       categories: []
     }
   },
@@ -85,6 +86,7 @@ export default {
           .then((response) => {
             // Product created successfully, handle the response
             console.log('Product created:', response.data)
+              this.$router.push('/products');
           })
           .catch((error) => {
             // Handle API error

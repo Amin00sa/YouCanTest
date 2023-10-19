@@ -19316,6 +19316,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common_BaseInput_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common/BaseInput.vue */ "./resources/js/components/common/BaseInput.vue");
 /* harmony import */ var _services_ProductService_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../services/ProductService.js */ "./resources/js/services/ProductService.js");
 /* harmony import */ var _services_CategoryService__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../services/CategoryService */ "./resources/js/services/CategoryService.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
 
 
 
@@ -19330,13 +19332,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      formData: {
+      formData: (0,vue__WEBPACK_IMPORTED_MODULE_4__.reactive)({
         name: '',
         description: '',
         price: '',
         category_id: '',
         image: null // Store the image file here
-      },
+      }),
 
       categories: []
     };
@@ -19344,6 +19346,7 @@ __webpack_require__.r(__webpack_exports__);
   // Rest of your component code...
   methods: {
     createProduct: function createProduct() {
+      var _this = this;
       // Create a FormData object and append the form data to it
       var formData = new FormData();
       formData.append('name', this.formData.name);
@@ -19355,6 +19358,7 @@ __webpack_require__.r(__webpack_exports__);
       _services_ProductService_js__WEBPACK_IMPORTED_MODULE_2__["default"].createProduct(formData).then(function (response) {
         // Product created successfully, handle the response
         console.log('Product created:', response.data);
+        _this.$router.push('/products');
       })["catch"](function (error) {
         // Handle API error
         console.error('Error creating product:', error);
@@ -19368,9 +19372,9 @@ __webpack_require__.r(__webpack_exports__);
       this.formData.image = file;
     },
     fetchCategories: function fetchCategories() {
-      var _this = this;
+      var _this2 = this;
       _services_CategoryService__WEBPACK_IMPORTED_MODULE_3__["default"].getCategories().then(function (response) {
-        _this.categories = response.data;
+        _this2.categories = response.data;
       })["catch"](function (error) {
         console.error('Error fetching categories:', error);
       });

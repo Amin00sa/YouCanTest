@@ -1,0 +1,12 @@
+<?php
+
+namespace App\Interfaces\Categories;
+
+use App\Models\Category;
+
+interface CategoryServiceInterface {
+    public function createCategory(array $data);
+    public function updateCategory(Category $product, array $data);
+    public function deleteCategory(Category $product);
+    public function getAllCategories();
+}

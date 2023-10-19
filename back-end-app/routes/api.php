@@ -16,9 +16,6 @@ use App\Http\Controllers\ProductController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 Route::apiResource('category', CategoryController::class)->except('show');
 
 Route::apiResource('product', ProductController::class)->except('show');

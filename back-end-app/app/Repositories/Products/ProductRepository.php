@@ -12,12 +12,6 @@ class ProductRepository implements ProductRepositoryInterface {
     // Implement methods
     public function createProduct(array $data)
     {
-        $hashedName = hash_file('sha256', $data['image']->path());
-        $extension = $data['image']->getClientOriginalExtension();
-        $filename = $hashedName . '.' . $extension;
-        $data['image']->storeAs('public/products/', $filename);
-        $pathToFile = asset('storage/products/'.$filename);
-        $data['image'] = $pathToFile;
         return Product::create($data);
     }
 
@@ -44,6 +38,26 @@ class ProductRepository implements ProductRepositoryInterface {
     public function deleteProduct(Product $product): ?bool
     {
         return $product->delete();
+    }
+
+    public function searchProduct(array $data): Collection
+    {
+        $query = Product::with('category');
+
+        if ($data['category_id'] != 'null') {
+            $categoryId = $data['category_id'];
+            $query->whereHas('category', function ($q) use ($categoryId) {
+                $q->where('category_id', $categoryId);
+            });
+        }
+
+        if ($data['maxPrice'] != 'null') {
+            $minPrice = $data['minPrice'];
+            $maxPrice = $data['maxPrice'];
+            $query->whereBetween('price', [$minPrice, $maxPrice]);
+        }
+
+        return $query->get();
     }
 
     public function getAllProducts(): Collection

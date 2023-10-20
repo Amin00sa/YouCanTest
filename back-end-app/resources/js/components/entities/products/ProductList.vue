@@ -9,14 +9,14 @@
               <label for="price" class="col-form-label">Price Range</label>
                   <div class="row">
                       <base-input
-                          v-model="minPrice"
+                          v-model="formData.minPrice"
                           class="col form-control mr-sm-2 mx-2"
                           type="number"
                           placeholder="Min Price"
                           id="minPrice"
                       />
                       <base-input
-                          v-model="maxPrice"
+                          v-model="formData.maxPrice"
                           class="col form-control mr-sm-2 mx-2"
                           type="number"
                           placeholder="Max Price"
@@ -26,7 +26,7 @@
               </div>
               <div class="mb-2 mx-4">
                   <label for="category_id" class="form-label">Select Category:</label>
-                  <select class="form-control">
+                  <select class="form-control" v-model="formData.category_id">
                       <option value="" disabled>Select a category</option>
                       <option v-for="category in categories.data" :key="category.id" :value="category.id">
                           {{ category.name }}
@@ -55,6 +55,9 @@
           <li>
             Image : <img :src="product.image" style="width: 100px; height: 50px">
           </li>
+            <li>
+                Price : {{ product.price }}
+            </li>
           <li v-if="product.category != null">
             Parent Name : {{product.category?.name}}
           </li>
@@ -74,7 +77,12 @@ export default {
     components: {BaseButton, BaseInput},
     data() {
     return {
-      products: [], categories: []
+      products: [], categories: [],
+        formData: {
+            minPrice: 0,
+            maxPrice: null,
+            category_id : null,
+        },
     };
   },
   created() {
@@ -100,6 +108,17 @@ export default {
               .catch(error => {
                   console.error('Error fetching categories:', error);
               });
+      },
+      SearchProduct(){
+        this.products = [];
+        ProductService.searchProduct(this.formData)
+            .then(response => {
+            this.products = response.data;
+            console.log(response);
+        })
+            .catch(error => {
+                console.error('Error fetching products:', error);
+            });
       }
     // Add methods for sorting and filtering products if needed
   }

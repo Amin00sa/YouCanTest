@@ -19,3 +19,4 @@ use App\Http\Controllers\ProductController;
 Route::apiResource('category', CategoryController::class)->except('show');
 
 Route::apiResource('product', ProductController::class)->except('show');
+Route::get('product/search', [ProductController::class,'searchProduct']);

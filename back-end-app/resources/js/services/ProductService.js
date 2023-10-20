@@ -7,5 +7,8 @@ export default {
     getAllProducts() {
         return api.get('/product');
     },
+    searchProduct(data){
+        return api.get(`/product/search?category_id=${data.category_id}&minPrice=${data.minPrice}&maxPrice=${data.maxPrice}`);
+    }
     // Other methods for products, etc.
 };

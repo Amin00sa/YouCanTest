@@ -32,4 +32,9 @@ class ProductService implements ProductServiceInterface {
     {
         return $this->productRepository->getAllProducts();
     }
+
+    public function searchProduct(array $data): Collection
+    {
+        return $this->productRepository->searchProduct($data);
+    }
 }

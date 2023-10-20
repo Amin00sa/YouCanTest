@@ -70,7 +70,7 @@ class CreateNewProductCommand extends Command
      * @return Category
      * @throws ValidationException
      */
-    private function handleCategoryCreation(): Category
+    private function handleCategoryCreation()
     {
         // Display a list of categories for the user to choose from
         $this->info('Available Categories:');
@@ -95,7 +95,8 @@ class CreateNewProductCommand extends Command
         if ($categoryID === 'create') {
 
             $categoryData = [
-                'name' => $this->ask('Enter the name of the new category')
+                'name' => $this->ask('Enter the name of the new category'),
+                'parent_id' => $this->ask('Enter the parent id of the new category')
             ];
 
             $categoryValidator = Validator::make($categoryData, (new CategoryStoreRequest())->rules());
